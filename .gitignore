@@ -1,0 +1,11 @@
+/data/*
+/build/
+/sources/
+/dist/
+/Atari-XL.mdb
+__pycache__/
+/config.json
+/GamebaseXL.spec
+.idea/
+.venv/
+.DS_Store

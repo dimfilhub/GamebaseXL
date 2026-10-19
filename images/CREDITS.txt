@@ -1,0 +1,5 @@
+atari_800xl.jpg
+  "Atari-800XL" by Evan-Amos (a dingy Atari 800XL, an 8-bit computer released by Atari in the early 1980s)
+  https://commons.wikimedia.org/wiki/File:Atari-800XL.jpg
+  Licensed CC BY-SA 3.0 (https://creativecommons.org/licenses/by-sa/3.0/)
+  Scaled to 1280 px wide and re-encoded.
