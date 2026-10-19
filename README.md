@@ -19,6 +19,32 @@ Developed and tested on macOS (Apple Silicon) with atari800 7.2.1. The code also
 - **Launch in Atari800**: copies the game's media (`.xex`, `.bas`, or the disk image, cartridge or tape inside its zip) into `data/cache/run/<id>` and starts atari800 with the OS and BASIC ROMs from `data/emulator`. The per-game options stored in the database (the *Gemus* text, written for Altirra) are translated into atari800 flags: `model=` (800 OS-A/OS-B, 130XE, Rambo), `basic=`, `basicrom=`, `cart=basic*`, `artifact=ntsc`, `tape=`, `siopatch=off`, `turbo=on`, `stereo=yes` and the cartridge `mapper=`. Options atari800 has no equivalent for (for example `device=vbxe`, `control=…`) are ignored.
 - **Runnable extras**: extras marked with ▶ (original disks, original tapes, cartridges, alternative versions) start in the emulator when you double-click them. Other extras open with the default application.
 
+## Screenshots
+
+**Main window**
+
+![Main window with the filter dropdowns](images/screenshots/screenshot-1.jpg)
+
+**Searching and selecting a game**
+
+![Game selected, showing its cover and info](images/screenshots/screenshot-2.jpg)
+
+**Settings**
+
+![Settings window](images/screenshots/screenshot-3.jpg)
+
+**Help**
+
+![Help window](images/screenshots/screenshot-4.jpg)
+
+**Populate folders**
+
+![Populate folders window](images/screenshots/screenshot-5.jpg)
+
+**About**
+
+![About window](images/screenshots/screenshot-6.jpg)
+
 ## Using the app
 
 - **Search**: type in the *Search* field above the list to filter games by name as you type. Click **Clear** to empty the field and show all games again.

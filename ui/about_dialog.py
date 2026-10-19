@@ -2,7 +2,7 @@ import tkinter as tk
 import webbrowser
 from tkinter import ttk
 
-from ui.populate_dialog import SOURCES_URL
+from populate import SOURCES_URL, SOURCES_URL_TEXT
 from ui.style import BACKGROUND_COLOR, LINK_COLOR
 
 ABOUT_TEXT = ("GamebaseXL Browser and Player: a browser and launcher for the GameBase Atari XL "
@@ -26,7 +26,7 @@ class AboutDialog(tk.Toplevel):
         ttk.Label(body, text=name, font=("Helvetica", 16, "bold")).pack()
         ttk.Label(body, text=f"Version {version}").pack(pady=(0, 10))
         ttk.Label(body, text=ABOUT_TEXT, wraplength=380, justify="center").pack()
-        link = ttk.Label(body, text=SOURCES_URL, foreground=LINK_COLOR, cursor="hand2")
+        link = ttk.Label(body, text=SOURCES_URL_TEXT, foreground=LINK_COLOR, cursor="hand2")
         link.pack(pady=(4, 12))
         link.bind("<Button-1>", lambda _e: webbrowser.open(SOURCES_URL))
         ttk.Button(body, text="Close", command=self.destroy).pack()

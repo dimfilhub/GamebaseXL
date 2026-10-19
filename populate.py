@@ -5,10 +5,12 @@ Usage: python3 populate.py [--dry-run]
 import sys
 import zipfile
 from pathlib import Path
+from urllib.parse import unquote
 
 from data_layout import DataLayout
 
 SOURCES_URL = "https://forums.atariage.com/topic/326710-atari-800-gamebases-gamepacks-%E2%80%93-links-working-2021/"
+SOURCES_URL_TEXT = unquote(SOURCES_URL)  # readable form for labels; open SOURCES_URL
 PROGRESS_EVERY = 2000  # files
 
 

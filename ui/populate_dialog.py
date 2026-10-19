@@ -6,7 +6,7 @@ from tkinter import filedialog, ttk
 
 from data_audit import DataAudit
 from ui.style import BACKGROUND_COLOR, LINK_COLOR
-from populate import SOURCES_URL, Populator
+from populate import SOURCES_URL, SOURCES_URL_TEXT, Populator
 
 
 SOURCES_CREDIT = ("The source zips needed here come from the GameBase Atari XL project (based on "
@@ -54,7 +54,7 @@ class PopulateDialog(tk.Toplevel):
         credit = ttk.Frame(self, padding=(8, 6, 8, 0))
         credit.pack(fill="x")
         ttk.Label(credit, text=SOURCES_CREDIT, wraplength=660, justify="left").pack(anchor="w")
-        link = ttk.Label(credit, text=SOURCES_URL, foreground=LINK_COLOR, cursor="hand2")
+        link = ttk.Label(credit, text=SOURCES_URL_TEXT, foreground=LINK_COLOR, cursor="hand2")
         link.pack(anchor="w")
         link.bind("<Button-1>", lambda _e: webbrowser.open(SOURCES_URL))
         frame = ttk.Frame(self, padding=8)
