@@ -144,13 +144,25 @@ It needs [mdb-tools](https://github.com/mdbtools/mdbtools) (`brew install mdb-to
 ## Building a standalone app
 
 ```sh
-pip install pyinstaller pillow
+pip install -r requirements.txt
 python build.py
 ```
 
 This builds with PyInstaller into `dist/`, and copies `atarixl.sqlite3` and `data/emulator` next to the app. The large game data is not bundled. Choose its folder in Settings, or place it next to the app as `data/`.
 
 The copied `data/emulator` folder holds the OS and BASIC ROMs from your own populated data, so don't publish or redistribute `dist/`.
+
+### Downloads and first launch (code signing)
+
+Each GitHub release has a build for Windows, macOS and Linux, produced by the GitHub Actions workflow in `.github/workflows/build.yml` whenever a release is published. Unzip the archive and keep `atarixl.sqlite3` and the `data/` folder next to the app. atari800 is not bundled; install it system-wide or point the app to it in Settings.
+
+The builds are **not code signed**. Signing needs a paid Apple Developer account (macOS) or a code-signing certificate (Windows), which this hobby project does not have. Your OS will therefore warn you the first time. The app is safe to run if you downloaded it from this repository's releases; the steps below get past the warning:
+
+- **macOS**: the app is ad-hoc signed only, so Gatekeeper says it "cannot be opened because the developer cannot be verified" (or that it is damaged). Right-click (or Control-click) `GamebaseXL.app` and choose **Open**, then click **Open** in the dialog. You only need to do this once. If macOS still refuses, open **System Settings → Privacy & Security** and click **Open Anyway**, or run `xattr -dr com.apple.quarantine GamebaseXL.app` in Terminal.
+- **Windows**: SmartScreen shows "Windows protected your PC". Click **More info**, then **Run anyway**. If the zip was blocked, right-click it, choose **Properties** and tick **Unblock** before extracting.
+- **Linux**: make the file executable if needed (`chmod +x GamebaseXL`) and run it from a terminal or your file manager. Python and Tk are not needed, but the binary is built on Ubuntu 22.04, so very old distributions may lack a compatible glibc.
+
+The macOS build is for Apple Silicon (arm64) Macs. On an Intel Mac, run from source or build it yourself with `python build.py`.
 
 ## Credits
 

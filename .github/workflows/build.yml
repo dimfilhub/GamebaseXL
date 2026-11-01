@@ -1,0 +1,79 @@
+name: Build release
+
+# Builds the app for Windows, macOS and Linux whenever a release is published,
+# and attaches the archives to that release. Can also be run by hand to test.
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            name: windows
+          - os: macos-latest
+            name: macos
+          - os: ubuntu-22.04
+            name: linux
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Work out the version
+        shell: bash
+        run: |
+          # Release builds use the release tag; manual runs use APP_VERSION from ui/app.py
+          if [ "${{ github.event_name }}" = "release" ]; then
+            echo "TAG=${{ github.event.release.tag_name }}" >> "$GITHUB_ENV"
+          else
+            echo "TAG=v$(sed -n 's/^APP_VERSION = "\(.*\)"/\1/p' ui/app.py)" >> "$GITHUB_ENV"
+          fi
+
+      - uses: actions/setup-python@v7
+        with:
+          python-version: "3.12"
+
+      - name: Install Tk (Linux)
+        if: matrix.name == 'linux'
+        run: sudo apt-get update && sudo apt-get install -y python3-tk
+
+      - name: Install requirements
+        run: python -m pip install -r requirements.txt
+
+      - name: Build
+        run: python build.py
+
+      - name: Package (Windows)
+        if: matrix.name == 'windows'
+        shell: pwsh
+        run: Compress-Archive -Path dist/* -DestinationPath "GamebaseXL-$env:TAG-windows.zip"
+
+      - name: Package (macOS)
+        if: matrix.name == 'macos'
+        run: |
+          # PyInstaller also leaves a plain folder next to the .app; only ship the .app
+          rm -rf dist/GamebaseXL
+          ditto -c -k --sequesterRsrc dist "GamebaseXL-$TAG-macos.zip"
+
+      - name: Package (Linux)
+        if: matrix.name == 'linux'
+        run: tar -czf "GamebaseXL-$TAG-linux.tar.gz" -C dist .
+
+      - uses: actions/upload-artifact@v7
+        with:
+          name: GamebaseXL-${{ matrix.name }}
+          path: GamebaseXL-*
+
+      - name: Attach to release
+        if: github.event_name == 'release'
+        shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "$TAG" GamebaseXL-* --clobber

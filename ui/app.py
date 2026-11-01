@@ -4,7 +4,7 @@ from tkinter import filedialog, messagebox, ttk
 from assets import GameAssets, exists
 from config import Config
 from data_audit import DataAudit
-from data_layout import DataLayout
+from data_layout import RESOURCE_ROOT, DataLayout
 from emulator import Atari800Launcher, Atari800Locator, LaunchError, MediaPreparer
 from repository import GameRepository
 from system import OperatingSystem
@@ -20,7 +20,7 @@ from ui.settings_dialog import SettingsDialog
 from ui.style import AppStyle
 
 APP_NAME = "GamebaseXL Browser and Player"
-APP_VERSION = "1.0.0"
+APP_VERSION = "1.0.1"
 IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".gif", ".bmp"}
 
 
@@ -30,6 +30,7 @@ class App(tk.Tk):
     def __init__(self, layout=None):
         super().__init__()
         self.title(f"{APP_NAME} {APP_VERSION} © DimFil 2026")
+        self._set_window_icon()
         self._maximize()
 
         self.layout = layout or DataLayout()
@@ -45,6 +46,15 @@ class App(tk.Tk):
         self._build_ui()
         self._build_menu()
         self.after(200, self._check_data)
+
+    def _set_window_icon(self):
+        try:
+            from PIL import Image, ImageTk
+            with Image.open(RESOURCE_ROOT / "images" / "icon.png") as im:
+                self._icon = ImageTk.PhotoImage(im.resize((256, 256), Image.LANCZOS))
+            self.iconphoto(True, self._icon)
+        except (OSError, tk.TclError, ImportError):
+            pass  # a missing icon is not worth stopping for
 
     def _check_data(self):
         problem = DataAudit(self.layout, self.repo).startup_problem()
@@ -75,6 +85,8 @@ class App(tk.Tk):
         help_menu.add_command(label=f"About {APP_NAME}…", command=self.open_about)
         menubar.add_cascade(label="Help", menu=help_menu)
         self.config(menu=menubar)
+        # macOS: the app-menu "About" item calls this command instead of the bare system panel
+        self.createcommand("tkAboutDialog", self.open_about)
 
     def open_help(self):
         HelpDialog(self, APP_NAME)
