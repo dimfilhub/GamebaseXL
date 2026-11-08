@@ -20,7 +20,7 @@ from ui.settings_dialog import SettingsDialog
 from ui.style import AppStyle
 
 APP_NAME = "GamebaseXL Browser and Player"
-APP_VERSION = "1.0.1"
+APP_VERSION = "1.1.0"
 IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".gif", ".bmp"}
 
 
