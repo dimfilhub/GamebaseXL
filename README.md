@@ -60,7 +60,7 @@ Developed and tested on macOS (Apple Silicon) with atari800 7.2.1. The code also
 - [atari800](https://atari800.github.io/) to launch games (macOS: `brew install atari800`). Browsing works without it.
 - The OS and BASIC ROMs in `data/emulator`. They come from the Altirra folder of the main source zip and are extracted by *Populate folders* (`800XL.ROM`, `800XE.ROM`, `OSAPAL.ROM`, `OSBNTSC.ROM`, `BASIC-A/B/C.ROM`).
 
-Run the app:
+Run the app. The easiest way is to double-click the launcher for your system (`start_macos.command`, `start_windows.bat` or `start_linux.sh`). It creates a `.venv`, installs the requirements on first run, and starts the app. Or run it by hand:
 
 ```sh
 python gamebaseXL.py
