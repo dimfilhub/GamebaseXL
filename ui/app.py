@@ -17,10 +17,11 @@ from ui.image_preview import PLACEHOLDER_CREDIT, ImagePreview
 from ui.info_tabs import InfoTabs
 from ui.populate_dialog import PopulateDialog
 from ui.settings_dialog import SettingsDialog
-from ui.style import AppStyle
+from ui.style import BACKGROUND_COLOR, AppStyle
+from update_check import UpdateChecker
 
 APP_NAME = "GamebaseXL Browser and Player"
-APP_VERSION = "1.1.0"
+APP_VERSION = "1.2.0"
 IMAGE_EXTS = {".jpg", ".jpeg", ".png", ".gif", ".bmp"}
 
 
@@ -44,7 +45,10 @@ class App(tk.Tk):
 
         AppStyle(self).apply()
         self._build_ui()
+        self.updater = UpdateChecker(self, APP_NAME, APP_VERSION, self.settings.get, self.settings.set,
+                                     background=BACKGROUND_COLOR)
         self._build_menu()
+        self.updater.check_at_startup()
         self.after(200, self._check_data)
 
     def _set_window_icon(self):
@@ -83,6 +87,7 @@ class App(tk.Tk):
         help_menu = tk.Menu(menubar, tearoff=False)
         help_menu.add_command(label=f"{APP_NAME} Help", command=self.open_help)
         help_menu.add_command(label=f"About {APP_NAME}…", command=self.open_about)
+        self.updater.add_menu_items(help_menu)
         menubar.add_cascade(label="Help", menu=help_menu)
         self.config(menu=menubar)
         # macOS: the app-menu "About" item calls this command instead of the bare system panel

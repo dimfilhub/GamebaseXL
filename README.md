@@ -164,6 +164,14 @@ The builds are **not code signed**. Signing needs a paid Apple Developer account
 
 The macOS build is for Apple Silicon (arm64) Macs. On an Intel Mac, run from source or build it yourself with `python build.py`.
 
+## Updates
+
+The app can tell you when a newer release is published on [GitHub](https://github.com/dimfilhub/GamebaseXL/releases). Once a day, a few seconds after it starts, it asks GitHub for the latest release and, if that is newer than yours, shows a window with **Open download page**, **Skip this version** and **Later**. Nothing is shown when you are up to date or offline.
+
+- **Help > Check for Updates…** checks right away and always answers (a skipped version is shown again here).
+- **Help > Check for updates at startup** switches the automatic check off; the choice is kept.
+- Only an ordinary request for the project's public releases page is sent: no personal data. Nothing is downloaded or installed; you update by getting the new version yourself.
+
 ## Credits
 
 - Game data and files: the GameBase Atari XL project and its contributors (see above).
